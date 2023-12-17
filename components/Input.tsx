@@ -1,23 +1,26 @@
 'use client'
+
 import React, { useState, useContext } from 'react'
 import { DictAppContext } from '@/context/DictAppProvider'
 
 function Input() {
-  let valueFromContext = useContext(DictAppContext)
-
-  const [searched, setSearched] = useState('')
+  let { handleSendWord, wordData } = useContext(DictAppContext)
+  const [searchInput, setSearchInput] = useState('')
 
   function handleClick() {
-    console.log('we clicked')
+    handleSendWord(searchInput)
   }
-
-  console.log(valueFromContext)
 
   return (
     <div>
       <h2>Input client component</h2>
-      <input type='text' value={searched} onChange={(e) => setSearched(e.target.value)} />
+      <input
+        type='text'
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+      />
       <button onClick={handleClick}>Search</button>
+      <p>{wordData ? wordData?.[0]?.phonetic : 'no searched word yet'}</p>
     </div>
   )
 }
