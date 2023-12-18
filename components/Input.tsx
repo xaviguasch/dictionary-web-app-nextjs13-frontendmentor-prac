@@ -11,6 +11,8 @@ function Input() {
     handleSendWord(searchInput)
   }
 
+  console.log(wordData)
+
   return (
     <div>
       <h2>Input client component</h2>

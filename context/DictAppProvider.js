@@ -1,5 +1,6 @@
 'use client'
 
+import { getWord } from '@/app/api/route'
 import { createContext, useContext, useState, useEffect } from 'react'
 
 export const DictAppContext = createContext()
@@ -12,12 +13,21 @@ function DictAppProvider({ children }) {
     console.log()
     console.log(`Printing word from useEffect in Context: ${word}`)
 
+    // const fetchData = async () => {
+    //   const response = await fetch(
+    //     `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+    //   )
+    //   const newData = await response.json()
+    //   setWordData(newData)
+    // }
+
+    // fetchData()
+
     const fetchData = async () => {
-      const response = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-      )
+      const response = await getWord(word)
       const newData = await response.json()
-      setWordData(newData)
+      console.log(newData.data[0])
+      setWordData(newData.data[0])
     }
 
     fetchData()
@@ -28,9 +38,7 @@ function DictAppProvider({ children }) {
     setWord(searchedWord)
   }
 
-  const dictContextState = { handleSendWord, name: 'Xavi', wordData }
-
-  console.log(wordData)
+  const dictContextState = { handleSendWord, wordData }
 
   return (
     <DictAppContext.Provider value={dictContextState}>{children}</DictAppContext.Provider>
